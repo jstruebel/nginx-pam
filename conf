@@ -1,0 +1,12 @@
+#!/bin/bash -ex
+install()
+{
+    apt-get update
+    DEBIAN_FRONTEND=noninteractive apt-get -y \
+        -o DPkg::Options::=--force-confdef \
+        -o DPkg::Options::=--force-confold \
+        install $@
+}
+
+# add webserver user to shadow group. Potentially unsafe but required for pam_unix
+usermod -a -G shadow www-data
